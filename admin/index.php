@@ -1,13 +1,5 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['user_login'])) {
-    header("Location:loginform.php?error=You are not logged in, please login first." );
-    die;
-}
-
-require_once "../connection.php";
-
+require_once "logincheck.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,9 +9,20 @@ require_once "../connection.php";
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to administrative panel of Swastik Ecommerce.</h1>
-        <p>Hello <?php echo $_SESSION['username']; ?> </p>
-        <a onclick="return confirm('Are you sure to logout?');" href="logout.php">Logout</a>
+        <p class="text-right">
+            Hello <?php echo $_SESSION['username']; ?> 
+            <a onclick="return confirm('Are you sure to logout?');" href="logout.php">Logout</a>
+        </p>
+
+        <?php require_once("menus.php"); ?>
+
+        <div class="main" style="height:300px;">
+            <h1>Welcome to administrative panel of Swastik Ecommerce.</h1>
+        </div>
+
+        <div class="footer">
+            Copyright @ Swastik Ecommerce
+        </div>
     </div>
 </body>
 </html>
