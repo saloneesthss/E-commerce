@@ -25,7 +25,8 @@ $categories=$stmtCategory->fetchAll(PDO::FETCH_ASSOC);
             <h2>Categories</h2>
             <div class="card">
                 <div class="card-header">
-                    Products Listing
+                    Add New Category
+                    <a href="addcategory.php" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered">
