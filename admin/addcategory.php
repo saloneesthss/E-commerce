@@ -42,23 +42,23 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
                 <div class="card-body">
                     <form action="" method="post">
                         <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" name="name" id="name">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description:</label>
-                    <textarea name="description" id="description" rows="5" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="status">Status:</label>
-                    <select name="status" id="status" class="form-control">
-                        <option value="">Select Status</option>
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a href="categories.php" class="btn btn-secondary">Cancel</a>
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" name="name" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea name="description" id="description" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status:</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="">Select Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="categories.php" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>
