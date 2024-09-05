@@ -46,7 +46,10 @@ $categories=$stmtCategory->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $category['id'];?></td>
                                 <td><?php echo $category['name'];?></td>
                                 <td><?php echo $category['status']==1?'Active':'Inactive';?></td>
-                                <td>Edit | Delete</td>
+                                <td>
+                                    <a href="editcategory.php?id=<?php echo $category['id']; ?>">Edit</a> |
+                                    <a href="">Delete</a>
+                                </td>
                             </tr>
                             <?php } ?>
                         </tbody>
