@@ -1,11 +1,20 @@
 <?php
 require_once "./logincheck.php";
 
-$id=$_GET['id'];
+if (!isset($_GET['id'])) {
+    header("Location:categories.php?error=Please provide a valid ID for the category.");
+    die;
+}
+$id=(int) $_GET['id'];
+
 $sql="select * from `categories` where id=$id";
 $stmt=$con->prepare($sql);
 $stmt->execute();
 $category=$stmt->fetch(PDO::FETCH_ASSOC);
+if(!$category) {
+    header("Location:categories.php?error=No category found with the given ID.");
+    die;
+}
 // print_r($category);
 // die;
 

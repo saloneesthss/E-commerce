@@ -25,10 +25,21 @@ $categories=$stmtCategory->fetchAll(PDO::FETCH_ASSOC);
             <h2>Categories</h2>
             <div class="card">
                 <div class="card-header">
-                    Add New Category
+                    Category Listing
                     <a href="addcategory.php" class="btn btn-primary">Add New</a>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
+                    <?php if(isset($_GET['error'])) { ?>
+                    <div class="alert alert-danger">
+                        <?php echo $_GET['error']; ?>
+                    </div>
+                    <?php } ?>
+                    <?php if(isset($_GET['success'])) { ?>
+                    <div class="alert alert-success">
+                        <?php echo $_GET['success']; ?>
+                    </div>
+                    <?php } ?>
+
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -48,7 +59,8 @@ $categories=$stmtCategory->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $category['status']==1?'Active':'Inactive';?></td>
                                 <td>
                                     <a href="editcategory.php?id=<?php echo $category['id']; ?>">Edit</a> |
-                                    <a href="">Delete</a>
+                                    <a onclick="return confirm('Are you sure to delete this category?')"
+                                    href="deletecategory.php?id=<?php echo $category['id']; ?>">Delete</a>
                                 </td>
                             </tr>
                             <?php } ?>
