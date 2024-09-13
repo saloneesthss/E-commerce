@@ -5,6 +5,10 @@ $stmtProduct=$con->prepare("select * from categories");
 $stmtProduct->execute();
 $categories=$stmtProduct->fetchAll(PDO::FETCH_ASSOC);
 
+$uploadPath="../product_images";
+// Used for uploading images to folder
+// upload, is_uploaded_file, move_uploaded_file, $_FILES, basename
+
 if($_SERVER['REQUEST_METHOD']==='POST') {
     //handle login submit
     $sku=$_POST['sku'];
@@ -13,11 +17,18 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
     $category_id=$_POST['category_id'];
     $description=$_POST['description'];
     $status=$_POST['status'];
+
+    $imageName=null;
+    if(is_uploaded_file($_FILES['image_name']['tmp_name'])) {
+        $imageName=$_FILES['image_name']['name'];
+        move_uploaded_file($_FILES['image_name']['tmp_name'], $uploadPath . "/" . $imageName);
+    }
     
     $sql="insert into products set 
     sku='$sku', 
     name='$name', 
     price='$price', 
+    image_name='$imageName',
     category_id='$category_id', 
     description='$description', 
     status='$status'";
@@ -53,7 +64,7 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
                     <a href="addproduct.php" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="sku">SKU:</label>
                             <input type="text" class="form-control" name="sku" id="sku">
@@ -78,8 +89,8 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
                             <input type="number" min="0" class="form-control" name="price" id="price">
                         </div>
                         <div class="form-group">
-                            <label for="image">Image:</label>
-                            <input type="file" accept=".jpg,.jpeg,.png" class="form-control" name="image" id="image">
+                            <label for="image_name">Image:</label>
+                            <input type="file" accept=".jpg,.jpeg,.png" class="form-control" name="image_name" id="image_name">
                         </div>
                         <div class="form-group">
                             <label for="description">Description:</label>

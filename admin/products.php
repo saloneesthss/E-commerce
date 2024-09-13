@@ -45,9 +45,11 @@ $products=$stmtProduct->fetchAll(PDO::FETCH_ASSOC);
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>SKU</th>
                                 <th>Name</th>
                                 <th>Category</th>
                                 <th>Price</th>
+                                <th>Photo</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -58,13 +60,17 @@ $products=$stmtProduct->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><?php echo $product['id'];?></td>
+                                <td><?php echo $product['sku'];?></td>
                                 <td><?php echo $product['name'];?></td>
                                 <td><?php echo $product['category_name'];?></td>
                                 <td><?php echo number_format($product['price'],2);?></td>
+                                <td>
+                                    <img width="100" src="../product_images/<?php echo $product['image_name']; ?>" alt="">
+                                </td>
                                 <td><?php echo $product['status']==1?'Active':'Inactive';?></td>
                                 <td>
-                                    <a href="editproduct.php?id=<?php echo $product['id']; ?>">Edit</a> |
-                                    <a onclick="return confirm('Are you sure to delete this product?')"
+                                    <a class="btn btn-primary" href="editproduct.php?id=<?php echo $product['id']; ?>">Edit</a> 
+                                    <a class="btn btn-danger" onclick="return confirm('Are you sure to delete this product?')"
                                     href="deleteproduct.php?id=<?php echo $product['id']; ?>">Delete</a>
                                 </td>
                             </tr>
