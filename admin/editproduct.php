@@ -30,6 +30,15 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
     $category_id=$_POST['category_id'];
     $description=$_POST['description'];
     $status=$_POST['status'];
+    $imageNameOld=$_POST['image_name_old'];
+    $imageName=$imageNameOld;
+    if(is_uploaded_file($_FILES['image_name']['tmp_name'])) {
+        if (!empty($imageNameOld) && file_exists('../product_images/' . $imageNameOld)) {
+            unlink('../product_images/' . $imageNameOld);
+        }
+        $imageName=$_FILES['image_name']['name'];
+        move_uploaded_file($_FILES['image_name']['tmp_name'], $uploadPath . "/" . $imageName);
+    }
     
     $sql="update products set sku='$sku', 
     name='$name', 
@@ -110,6 +119,15 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
                             id="description" 
                             rows="5" 
                             class="form-control"> <?php echo $product['description'] ?> </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Images:</label>
+                            <input type="file" accept=".jpg,.jpeg,.png" class="form-control" name="image_name" id="image_name">
+                            <input type="hidden" name="image_name_old" value="<?php echo $product['image_name']; ?>">
+                            <?php if (!empty($product['image_name']) && file_exists('../product_images/' . $product['image_name'])) { ?>
+                                <img width="100" src="../product_images/<?php echo $product['image_name']; ?>" alt="">
+                            <?php } ?>
+                            
                         </div>
                         <div class="form-group">
                             <label for="status">Status:</label>

@@ -65,7 +65,9 @@ $products=$stmtProduct->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $product['category_name'];?></td>
                                 <td><?php echo number_format($product['price'],2);?></td>
                                 <td>
-                                    <img width="100" src="../product_images/<?php echo $product['image_name']; ?>" alt="">
+                                    <?php if (!empty($product['image_name']) && file_exists('../product_images/' . $product['image_name'])) { ?>
+                                        <img width="100" src="../product_images/<?php echo $product['image_name']; ?>" alt="">
+                                    <?php } ?>
                                 </td>
                                 <td><?php echo $product['status']==1?'Active':'Inactive';?></td>
                                 <td>
