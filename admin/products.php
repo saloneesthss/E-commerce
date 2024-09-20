@@ -2,11 +2,19 @@
 require_once "logincheck.php";
 require_once "../connection.php";
 
+$categoryId = isset($_GET['category_id']) ? (int) $_GET['category_id'] : '';
+$where='';
+if (!empty($categoryId)) {
+    $where="WHERE products.category_id=$categoryId";
+
+}
+
 $sql="SELECT categories.name as category_name, products.* FROM products INNER JOIN categories ON categories.id=products.category_id";
 $stmtProduct=$con->prepare($sql);
 $stmtProduct->execute();
 $products=$stmtProduct->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

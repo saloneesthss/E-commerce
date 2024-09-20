@@ -2,17 +2,24 @@
 require_once "./connection.php";
 
 // get all the latest/new products (3)
+$categoryId = isset($_GET['category_id'])? (int) $_GET['category_id']: '';
+
+$where='';
+if (!empty($categoryId)){
+$where="WHERE products.category_id=$categoryId";
+}
+
 $sql = "SELECT
 categories.name as category_name,
 products.*
 FROM products
 INNER JOIN categories ON categories.id=products.category_id
-ORDER BY products.id DESC
-LIMIT 4
-";
+$where
+ORDER BY products.id DESC";
+
 $stmt = $con->prepare($sql);
 $stmt->execute();
-$latestProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,18 +45,18 @@ $latestProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="card-header">Products</div>
 <div class="card-body">
 <div class="row">
-<?php foreach ($latestProducts as $latestProduct) { ?>
+<?php foreach ($products as $product) { ?>
 <div class="col-md-3">
-<h4><?php echo $latestProduct['name']; ?></h4>
+<h4><?php echo $product['name']; ?></h4>
 <br>
-<?php echo $latestProduct['category_name']; ?>
-<?php if (!empty($latestProduct['image_name']) && file_exists('./product_images/' . $latestProduct['image_name'])) { ?>
-<img class="img-thumbnail" src="./product_images/<?php echo $latestProduct['image_name']; ?>" alt="">
+<?php echo $product['category_name']; ?>
+<?php if (!empty($product['image_name']) && file_exists('./product_images/' . $product['image_name'])) { ?>
+<img class="img-thumbnail" src="./product_images/<?php echo $product['image_name']; ?>" alt="">
 <?php } ?>
 <p>
-Price: Rs. <?php echo number_format($latestProduct['price'], 2); ?>
+Price: Rs. <?php echo number_format($product['price'], 2); ?>
 </p>
-<a class="btn btn-primary" href="product_details.php?product_id=<?php echo $latestProduct['id']; ?>">View More</a>
+<a class="btn btn-primary" href="product-details.php?product_id=<php echo $latestProduct['id'];?>">View More</a>
 </div>
 <?php } ?>
 </div>

@@ -5,6 +5,8 @@ if (!isset($_GET['id'])) {
     header("Location:products.php?error=Please provide a valid ID for the product.");
     die;
 }
+$uploadPath="../product_images";
+
 $id=(int) $_GET['id'];
 
 $sql="select * from `products` where id=$id";
@@ -30,6 +32,7 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
     $category_id=$_POST['category_id'];
     $description=$_POST['description'];
     $status=$_POST['status'];
+
     $imageNameOld=$_POST['image_name_old'];
     $imageName=$imageNameOld;
     if(is_uploaded_file($_FILES['image_name']['tmp_name'])) {
@@ -45,6 +48,7 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
     price='$price', 
     category_id='$category_id', 
     description='$description', 
+    image_name='$imageName',
     status='$status' where id=$id";
     $catStmt=$con->prepare($sql);
     $catStmt->execute();
@@ -77,7 +81,7 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
                     Edit Product
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="sku">SKU:</label>
                             <input type="text" required
